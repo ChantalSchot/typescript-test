@@ -52,19 +52,27 @@ class TicTacToe {
 		let coordX = Math.floor(e.offsetX / SQUARE_SIZE);
 		let coordY = Math.floor(e.offsetY / SQUARE_SIZE);
 
-		let clickedSquare = game.board.find(sq => sq.x == coordX && sq.y == coordY);
-		clickedSquare.fillContent(game.playerToMove);
+		let clickedSquare = game.board.find(sq => sq.x === coordX && sq.y === coordY);
+		console.log(clickedSquare.content);
 
-		game.fillSquare(game.playerToMove,clickedSquare);
+		if (clickedSquare.content != undefined) {
+			alert("Square is already filled! Pick another...");
+			console.log("Square is already filled...")
+		}
+		else {
+			clickedSquare.fillContent(game.playerToMove);
+			game.fillSquare(game.playerToMove, clickedSquare);
+		}
+		
 	}
 
 	fillSquare(player: move, square: Square) {
 		var ctx = game.canvas.getContext("2d");
-		ctx.lineWidth = 3;
+		ctx.lineWidth = 8;
 
 		let startX = square.x * SQUARE_SIZE;
 		let startY = square.y * SQUARE_SIZE;
-		let padding = 0.05 * SQUARE_SIZE;
+		let padding = 0.1 * SQUARE_SIZE;
 
 		if (player.includes("O")) { 
 			// Draw O:
@@ -88,8 +96,7 @@ class TicTacToe {
 			ctx.stroke();
 			game.playerToMove = move.O;
 		}
-
-
+		console.log(game.board);
 
 	}
 
@@ -106,4 +113,4 @@ document.getElementById("myCanvas").addEventListener("click", game.handleClick);
 	// add text of current standings
 	// add text of who is winner
 	// add move counter
-	// be createve :-)
+	// be creative :-)
